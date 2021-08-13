@@ -1,0 +1,20 @@
+#BSUB -P MED107
+#BSUB -q batch-hm
+#BSUB -J dis-01-tsm
+#BSUB -o logs/dis-01-tsm.o%J
+#BSUB -e ErrorFile_DISS01TSM
+#BSUB -W 24:00
+#BSUB -nnodes 2
+
+cd /gpfs/alpine/world-shared/med106/yoonh/Benchmarks/Pilot3/JGH/
+
+# dump_dir: where the data is being dumped
+TEACH=/gpfs/alpine/world-shared/med106/yoonh/storageFolder/AverageSM/
+# dump_dir: where the data is being dumped
+DUMP=/gpfs/alpine/world-shared/med106/yoonh/storageFolder/Distilled/01/
+# config: configuration we are using
+CONFIG=1
+
+. ~/.bashrc_ttt
+
+jsrun -n12 -a1 -g1 -c7 python distiller-both.py ${TEACH} ${DUMP} ${CONFIG}

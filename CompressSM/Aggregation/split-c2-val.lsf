@@ -1,0 +1,24 @@
+#BSUB -P MED106
+#BSUB -J split-c2-val
+#BSUB -o logs/split-c2-val.o%J
+#BSUB -e ERRORS-SPLIT-C2-VAL
+#BSUB -W 02:00
+#BSUB -nnodes 3
+
+cd /gpfs/alpine/world-shared/med106/yoonh/Benchmarks/Pilot3/JGH/CompressSM/Aggregation/
+
+# data_dir: where is the data located
+DATA=/gpfs/alpine/world-shared/med106/yoonh/storageFolder/Ensemble/RawLogits/276MtCnns/
+# dump_dir: where the data is being dumped
+DUMP=/gpfs/alpine/world-shared/med106/yoonh/storageFolder/RawLogits/AverageSM/
+# prop: proportion of cases we are using
+PROP=1.0
+# offset: seed offset so we get different results
+TASK=2
+# data_type: data type we are going after
+DATA_TYPE=2
+
+module load ibm-wml-ce
+conda activate jghs-ibm
+
+jsrun -n18 -a1 -g1 -c7 python split-agg-sm.py ${DATA} ${DUMP} ${PROP} ${TASK} ${DATA_TYPE}

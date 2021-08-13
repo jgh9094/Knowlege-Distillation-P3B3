@@ -1,0 +1,19 @@
+#BSUB -P MED107
+#BSUB -J mtcnn
+#BSUB -o logs/mtcnn.o%J
+#BSUB -e ErrorFile_MTCNN
+#BSUB -W 06:00
+#BSUB -nnodes 46
+
+cd /gpfs/alpine/world-shared/med106/yoonh/Benchmarks/Pilot3/JGH
+
+# dump_dir: where is the data being dumped
+DUMP=/gpfs/alpine/world-shared/med106/yoonh/storageFolder/Ensemble/RawLogits/276MtCnns/
+# config: mtcnn configuration we are using
+CONFIG=0
+# prop: proportion of cases we are using
+PROP=1.0
+
+. ~/.bashrc_ttt
+
+jsrun -n276 -a1 -g1 -c7 python mtcnn-model.py ${DUMP} ${CONFIG} ${PROP}
